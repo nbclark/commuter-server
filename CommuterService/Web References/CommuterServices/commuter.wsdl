@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:element name="RegisterDevice">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="deviceId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="channelURI" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegisterDeviceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RegisterDeviceResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddCommute">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="deviceId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="commute" type="tns:CommuteDefinition" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CommuteDefinition">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="StartPoint" type="tns:RouteLocation" />
+          <s:element minOccurs="0" maxOccurs="1" name="EndPoint" type="tns:RouteLocation" />
+          <s:element minOccurs="0" maxOccurs="1" name="Routes" type="tns:ArrayOfRouteDefinition" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DepartureTime" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="ReturnTime" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastUpdated" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RouteLocation">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Location" type="tns:GpsLocation" />
+          <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="GpsLocation">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Latitude" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="Longitude" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="Altitude" type="s:double" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfRouteDefinition">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="RouteDefinition" nillable="true" type="tns:RouteDefinition" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RouteDefinition">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="WayPoints" type="tns:ArrayOfRouteLocation" />
+          <s:element minOccurs="0" maxOccurs="1" name="RoutePoints" type="tns:ArrayOfGpsLocation" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="EstimatedDuration" type="tns:TimeSpan" />
+          <s:element minOccurs="1" maxOccurs="1" name="EstimatedDurationMinutes" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="EstimatedDistance" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastUpdated" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfRouteLocation">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="RouteLocation" nillable="true" type="tns:RouteLocation" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfGpsLocation">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="GpsLocation" nillable="true" type="tns:GpsLocation" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TimeSpan" />
+      <s:element name="AddCommuteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddCommuteResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddRoute">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="deviceId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="commuteId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="route" type="tns:RouteDefinition" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddRouteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddRouteResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="guid">
+        <s:restriction base="s:string">
+          <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="RegisterDeviceSoapIn">
+    <wsdl:part name="parameters" element="tns:RegisterDevice" />
+  </wsdl:message>
+  <wsdl:message name="RegisterDeviceSoapOut">
+    <wsdl:part name="parameters" element="tns:RegisterDeviceResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddCommuteSoapIn">
+    <wsdl:part name="parameters" element="tns:AddCommute" />
+  </wsdl:message>
+  <wsdl:message name="AddCommuteSoapOut">
+    <wsdl:part name="parameters" element="tns:AddCommuteResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddRouteSoapIn">
+    <wsdl:part name="parameters" element="tns:AddRoute" />
+  </wsdl:message>
+  <wsdl:message name="AddRouteSoapOut">
+    <wsdl:part name="parameters" element="tns:AddRouteResponse" />
+  </wsdl:message>
+  <wsdl:portType name="CommuterSoap">
+    <wsdl:operation name="RegisterDevice">
+      <wsdl:input message="tns:RegisterDeviceSoapIn" />
+      <wsdl:output message="tns:RegisterDeviceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddCommute">
+      <wsdl:input message="tns:AddCommuteSoapIn" />
+      <wsdl:output message="tns:AddCommuteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddRoute">
+      <wsdl:input message="tns:AddRouteSoapIn" />
+      <wsdl:output message="tns:AddRouteSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="CommuterHttpGet" />
+  <wsdl:portType name="CommuterHttpPost" />
+  <wsdl:binding name="CommuterSoap" type="tns:CommuterSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="RegisterDevice">
+      <soap:operation soapAction="http://tempuri.org/RegisterDevice" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddCommute">
+      <soap:operation soapAction="http://tempuri.org/AddCommute" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddRoute">
+      <soap:operation soapAction="http://tempuri.org/AddRoute" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CommuterSoap12" type="tns:CommuterSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="RegisterDevice">
+      <soap12:operation soapAction="http://tempuri.org/RegisterDevice" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddCommute">
+      <soap12:operation soapAction="http://tempuri.org/AddCommute" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddRoute">
+      <soap12:operation soapAction="http://tempuri.org/AddRoute" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CommuterHttpGet" type="tns:CommuterHttpGet">
+    <http:binding verb="GET" />
+  </wsdl:binding>
+  <wsdl:binding name="CommuterHttpPost" type="tns:CommuterHttpPost">
+    <http:binding verb="POST" />
+  </wsdl:binding>
+  <wsdl:service name="Commuter">
+    <wsdl:port name="CommuterSoap" binding="tns:CommuterSoap">
+      <soap:address location="http://mobilesrc.com/commuter/commuter.asmx" />
+    </wsdl:port>
+    <wsdl:port name="CommuterSoap12" binding="tns:CommuterSoap12">
+      <soap12:address location="http://mobilesrc.com/commuter/commuter.asmx" />
+    </wsdl:port>
+    <wsdl:port name="CommuterHttpGet" binding="tns:CommuterHttpGet">
+      <http:address location="http://mobilesrc.com/commuter/commuter.asmx" />
+    </wsdl:port>
+    <wsdl:port name="CommuterHttpPost" binding="tns:CommuterHttpPost">
+      <http:address location="http://mobilesrc.com/commuter/commuter.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
